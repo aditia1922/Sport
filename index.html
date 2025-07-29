@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>𝒜𝒯𝒮 - Aditya Sakty</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+            -webkit-text-size-adjust: 100%;
+            /* Menambahkan perspektif untuk efek 3D pada elemen anak */
+            perspective: 1000px; 
+        }
+        
+        header {
+            background-color: transparent; /* Menghapus warna latar belakang header */
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            position: relative;
+            /* Menambahkan transform-style untuk efek 3D pada anak */
+            transform-style: preserve-3d; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6); /* Menambahkan bayangan pada header */
+            border-bottom: 2px solid #555; /* Menambahkan border bawah */
+        }
+        
+        .title-container {
+            background-color: #444; /* Mengubah warna latar belakang title-container menjadi abu-abu */
+            padding: 15px 25px; /* Padding lebih besar */
+            border-radius: 15px; /* Border-radius lebih besar */
+            display: inline-block;
+            margin: 0 auto;
+            /* Efek 3D untuk title-container */
+            transform: rotateX(15deg) rotateY(8deg) translateZ(30px); /* Rotasi dan translasi 3D yang lebih kuat */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8), /* Bayangan lebih kuat */
+                        0 0 0 7px rgba(255, 255, 255, 0.15) inset; /* Border dalam sebagai highlight yang lebih jelas */
+            transition: transform 0.6s ease, box-shadow 0.6s ease, background-color 0.3s ease; /* Transisi lebih halus */
+            position: relative;
+            overflow: hidden; /* Untuk efek pseudo-element */
+        }
+
+        /* Efek pseudo-element untuk highlight 3D */
+        .title-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 70%); /* Highlight lebih terang */
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1;
+        }
+
+        .title-container:hover::before {
+            opacity: 1;
+        }
+
+        .title-container:hover {
+            background-color: #555; /* Warna latar belakang saat hover */
+            transform: rotateX(0deg) rotateY(0deg) translateZ(0px); /* Kembali ke posisi normal saat hover */
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6),
+                        0 0 0 4px rgba(255, 255, 255, 0.1) inset;
+        }
+        
+        .main-title {
+            font-size: 3rem; /* Ukuran font lebih besar */
+            margin-bottom: 5px; /* Margin lebih kecil */
+            color: #fff; /* Pastikan warna teks tetap putih */
+            font-weight: bold;
+            font-style: italic;
+            font-family: 'Times New Roman', serif;
+            text-shadow: 0 0 20px rgba(255,255,255,0.6), /* Bayangan teks lebih kuat */
+                         0 0 30px rgba(255,255,255,0.3);
+            letter-spacing: 3px; /* Spasi huruf lebih lebar */
+            transform: skew(-10deg) translateZ(15px); /* Skew dan translasi Z yang lebih kuat */
+            transition: transform 0.4s ease;
+            position: relative;
+            z-index: 2; /* Pastikan teks di atas pseudo-element */
+        }
+
+        .main-title:hover {
+            transform: skew(-5deg) translateZ(5px); /* Kembali ke skew normal saat hover */
+        }
+        
+        .sub-title {
+            font-size: 1.4rem; /* Ukuran font lebih besar */
+            margin-top: 5px;
+            color: #ddd; /* Warna sub-judul sedikit lebih terang */
+            font-weight: normal;
+            transform: translateZ(8px); /* Translasi Z yang lebih kuat */
+            transition: transform 0.4s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .sub-title:hover {
+            transform: translateZ(2px);
+        }
+        
+        .profile-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0; /* Margin lebih besar */
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        
+        .profile-frame {
+            width: 220px; /* Ukuran frame lebih besar */
+            height: 220px;
+            border-radius: 50%;
+            border: 8px solid #000; /* Border lebih tebal */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            box-shadow: 0 0 0 8px #555, /* Bayangan frame lebih kuat */
+                        0 10px 25px rgba(0, 0, 0, 0.7); /* Bayangan jatuh lebih kuat */
+            /* Efek 3D pada frame */
+            transform: rotateY(15deg) rotateX(5deg) translateZ(30px);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .profile-frame:hover {
+            transform: rotateY(0deg) rotateX(0deg) translateZ(0px);
+            box-shadow: 0 0 0 6px #333, 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .profile-image {
+            width: 200px; /* Ukuran gambar lebih besar */
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #555; /* Border gambar lebih tebal */
+            /* Efek 3D pada gambar */
+            transform: translateZ(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: translateZ(0px) scale(1.05); /* Sedikit membesar saat hover */
+        }
+        
+        nav {
+            background-color: #000;
+            padding: 0.8rem 0; /* Padding lebih besar */
+            border-top: 1px solid #555; /* Border lebih tebal */
+            border-bottom: 1px solid #555;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Bayangan pada nav */
+            transform-style: preserve-3d;
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+            padding: 0 15px; /* Padding lebih besar */
+        }
+        
+        .nav-links li {
+            margin: 0.5rem; /* Margin lebih besar */
+            transform-style: preserve-3d;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem; /* Ukuran font lebih besar */
+            padding: 0.6rem 1rem; /* Padding lebih besar */
+            border-radius: 8px; /* Border-radius lebih besar */
+            transition: all 0.4s ease; /* Transisi lebih halus */
+            text-transform: uppercase;
+            letter-spacing: 1.5px; /* Spasi huruf lebih lebar */
+            display: inline-block;
+            white-space: nowrap;
+            background-color: #222; /* Warna latar belakang link */
+            border: 1px solid #444; /* Border pada link */
+            /* Efek 3D pada link */
+            transform: translateZ(5px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+        }
+        
+        .nav-links a:hover {
+            background-color: #444; /* Warna hover lebih gelap */
+            transform: translateZ(15px) translateY(-3px); /* Mengangkat dan maju saat hover */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.7);
+            border-color: #777;
+        }
+        
+        .content {
+            padding: 1.5rem; /* Padding lebih besar */
+            max-width: 1100px; /* Lebar maksimum lebih besar */
+            margin: 0 auto;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+        
+        .content-section {
+            display: none;
+            background-color: #1a1a1a; /* Warna latar belakang lebih gelap */
+            padding: 1.5rem; /* Padding lebih besar */
+            border-radius: 12px; /* Border-radius lebih besar */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Bayangan lebih kuat */
+            margin-bottom: 1.5rem; /* Margin bawah lebih besar */
+            color: #eee; /* Warna teks lebih terang */
+            opacity: 0;
+            transform: translateY(30px) rotateX(5deg); /* Efek 3D saat muncul */
+            transition: opacity 0.6s ease, transform 0.6s ease; /* Transisi lebih halus */
+            border: 1px solid #333; /* Border pada section */
+        }
+        
+        .content-section.active {
+            opacity: 1;
+            transform: translateY(0) rotateX(0deg);
+        }
+        
+        .home-content {
+            display: block;
+        }
+        
+        .home-content p {
+            font-size: 1.05rem; /* Ukuran font sedikit lebih besar */
+            margin: 1.2rem 0;
+            line-height: 1.7;
+        }
+        
+        .video-container {
+            margin: 2rem 0; /* Margin lebih besar */
+            text-align: center;
+            transform-style: preserve-3d;
+        }
+        
+        .video-player {
+            width: 100%;
+            max-width: 350px; /* Lebar maksimum video lebih besar */
+            height: 600px; /* Tinggi video lebih besar */
+            background-color: #000;
+            margin: 0 auto;
+            border-radius: 10px; /* Border-radius lebih besar */
+            border: 3px solid #555; /* Border lebih tebal */
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7); /* Bayangan video */
+            /* Efek 3D pada video player */
+            transform: rotateY(-5deg) translateZ(20px);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .video-player:hover {
+            transform: rotateY(0deg) translateZ(0px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .video-player video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .motivation-content p {
+            margin-bottom: 1.2rem;
+            font-style: italic;
+            font-size: 1rem; /* Ukuran font sedikit lebih besar */
+        }
+        
+        .basketball-content, .soccer-content, .running-content, .gym-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1.5rem; /* Jarak antar kolom */
+        }
+        
+        .sports-text {
+            flex: 1;
+            min-width: 300px; /* Lebar minimum teks lebih besar */
+            padding: 1rem;
+            background-color: #222; /* Latar belakang teks olahraga */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            transform: translateZ(10px); /* Efek 3D pada teks */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .sports-text:hover {
+            transform: translateZ(20px) translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6);
+        }
+        
+        .sports-text p {
+            margin-bottom: 1rem;
+            font-size: 1rem; /* Ukuran font sedikit lebih besar */
+        }
+        
+        .sports-image {
+            flex: 1;
+            min-width: 300px; /* Lebar minimum gambar lebih besar */
+            text-align: center;
+            padding: 1rem;
+            transform-style: preserve-3d;
+        }
+        
+        .sports-image img {
+            max-width: 100%;
+            max-height: 300px; /* Tinggi maksimum gambar lebih besar */
+            border-radius: 8px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            border: 3px solid #555;
+            object-fit: cover;
+            transform: rotateY(5deg) translateZ(15px); /* Efek 3D pada gambar */
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .sports-image img:hover {
+            transform: rotateY(0deg) translateZ(0px) scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        
+        h2 {
+            color: #fff;
+            margin-bottom: 1.2rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px; /* Spasi huruf lebih lebar */
+            font-size: 1.6rem; /* Ukuran font lebih besar */
+            text-shadow: 0 0 8px rgba(255,255,255,0.3);
+            transform: translateZ(5px); /* Efek 3D pada judul */
+        }
+        
+        footer {
+            background-color: #000;
+            color: #aaa; /* Warna teks footer lebih terang */
+            text-align: center;
+            padding: 1.2rem 0; /* Padding lebih besar */
+            margin-top: 2rem; /* Margin atas lebih besar */
+            border-top: 1px solid #555; /* Border lebih tebal */
+            font-size: 0.9rem; /* Ukuran font lebih besar */
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5); /* Bayangan pada footer */
+        }
+        
+        /* Style for the gray background wrapper */
+        .header-wrapper {
+            position: relative;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #555;
+        }
+
+        /* Mobile-first adjustments */
+        @media (max-width: 768px) {
+            .header-wrapper {
+                padding-bottom: 1rem;
+            }
+            .main-title {
+                font-size: 2.5rem;
+                letter-spacing: 2px;
+                transform: none; /* Menghilangkan efek 3D pada mobile */
+            }
+            
+            .sub-title {
+                font-size: 1.2rem;
+                transform: none;
+            }
+            
+            .profile-frame {
+                width: 180px;
+                height: 180px;
+                border: 6px solid #000;
+                box-shadow: 0 0 0 6px #333, 0 5px 15px rgba(0, 0, 0, 0.5);
+                transform: none; /* Menghilangkan efek 3D pada mobile */
+            }
+            
+            .profile-image {
+                width: 160px;
+                height: 160px;
+                border: 3px solid #333;
+                transform: none;
+            }
+            
+            .nav-links {
+                justify-content: space-around;
+                padding: 0 5px;
+            }
+            
+            .nav-links a {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.6rem;
+                letter-spacing: 1px;
+                transform: none;
+                box-shadow: none;
+            }
+
+            .nav-links a:hover {
+                transform: none;
+                box-shadow: none;
+            }
+            
+            .video-player {
+                max-width: 100%;
+                height: auto;
+                aspect-ratio: 9/16;
+                transform: none;
+                box-shadow: none;
+            }
+
+            .video-player:hover {
+                transform: none;
+                box-shadow: none;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .content-section {
+                padding: 1rem;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+                transform: translateY(20px) rotateX(0deg); /* Mengurangi efek 3D */
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+                letter-spacing: 1px;
+                transform: none;
+            }
+            
+            .home-content p, .motivation-content p, .sports-text p {
+                font-size: 0.95rem;
+            }
+
+            .sports-text {
+                transform: none;
+                box-shadow: none;
+            }
+
+            .sports-text:hover {
+                transform: none;
+                box-shadow: none;
+            }
+
+            .sports-image img {
+                transform: none;
+                box-shadow: none;
+            }
+
+            .sports-image img:hover {
+                transform: none;
+                box-shadow: none;
+            }
+
+            /* Penyesuaian untuk mobile agar efek 3D tidak terlalu berlebihan */
+            .title-container {
+                transform: none; /* Menghilangkan efek 3D pada mobile */
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+                padding: 10px 20px;
+            }
+
+            .title-container:hover {
+                transform: none;
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+            }
+
+            .main-title {
+                transform: none;
+                font-size: 2.5rem;
+            }
+
+            .main-title:hover {
+                transform: none;
+            }
+
+            .sub-title {
+                transform: none;
+                font-size: 1.2rem;
+            }
+
+            .sub-title:hover {
+                transform: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .sub-title {
+                font-size: 1rem;
+            }
+            
+            .profile-frame {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .profile-image {
+                width: 135px;
+                height: 135px;
+            }
+            
+            .nav-links {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.3rem;
+            }
+            
+            .nav-links li {
+                margin: 0.2rem;
+            }
+            
+            .nav-links a {
+                font-size: 0.75rem;
+                padding: 0.35rem;
+            }
+            
+            .basketball-content, .soccer-content, .running-content, .gym-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .sports-text, .sports-image {
+                min-width: 100%;
+                padding: 0.8rem;
+            }
+            
+            footer {
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Very small devices */
+        @media (max-width: 360px) {
+            .main-title {
+                font-size: 1.8rem;
+            }
+            
+            .nav-links a {
+                font-size: 0.65rem;
+                padding: 0.25rem;
+            }
+            
+            .content {
+                padding: 0.8rem;
+            }
+            
+            .content-section {
+                padding: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-wrapper" style="background-color: #333;">
+        <header>
+            <div class="title-container">
+                <h1 class="main-title">𝒜𝒯𝒮</h1>
+                <p class="sub-title">Aditya Sakty</p>
+            </div>
+        </header>
+        
+        <div class="profile-container">
+        <div class="profile-frame">
+            <img src="profile.jpg" alt="Aditya Sakty" class="profile-image" id="profile-pic">
+        </div>
+    </div>
+    </div>
+    
+    <nav>
+        <ul class="nav-links">
+            <li><a href="#" class="nav-link" data-target="home">Beranda</a></li>
+            <li><a href="#" class="nav-link" data-target="motivation">Motivasi</a></li>
+            <li><a href="#" class="nav-link" data-target="basketball">Basket</a></li>
+            <li><a href="#" class="nav-link" data-target="soccer">Sepak Bola</a></li>
+            <li><a href="#" class="nav-link" data-target="running">Lari-lari</a></li>
+            <li><a href="#" class="nav-link" data-target="gym">GYM</a></li>
+        </ul>
+    </nav>
+    
+    <div class="content">
+        <div class="home-content content-section active" id="home">
+            <h2>Ha ha ha ha </h2>
+            <p>Saya manusia bukan hewan dan tidak mudah menyerah menghadapi rintangan apapun seperti singa. Dan saya juga tidak takut cobaan yang begitu berat karna saya percaya pada diri saya sendiri dan saya yakin saya pasti capek wkwkw.</p>
+            
+            <div class="video-container">
+                <div class="video-player">
+                    <video src="video_istirahat.mp4" autoplay muted loop playsinline>
+                        Browser Anda tidak mendukung tag video.
+                    </video>
+                </div>
+            </div>
+        </div>
+        
+        <div class="motivation-content content-section" id="motivation">
+            <h2>Motivasi</h2>
+            <p>Hidup itu seperti mie instan. Kadang kita berharap semuanya cepat selesai, jadi kita nunggu dengan sabar sambil ngelihat air mendidih. Tapi, terkadang meskipun kita udah nunggu lama, mie-nya tetap keras dan gak enak. Nah, di situ lah pelajaran hidupnya: gak semua hal harus cepat, karena terkadang yang nunggu lebih lama itu justru lebih enak. Jadi, sabar itu penting, apalagi kalau kamu lagi nunggu sambil ngeliat orang lain makan mie instan yang lebih enak—karena mereka udah nambahin telur dan sayur. Pokoknya, jangan cuma nunggu, tapi tambahin apa yang bisa bikin hidup kamu lebih nikmat!</p>
+            
+        </div>
+        
+        <div class="basketball-content content-section" id="basketball">
+            <div class="sports-text">
+                <h2>Basket</h2>
+                <p>Basket itu seperti hidup. Kadang kamu dapet bola, ngerasa seperti raja lapangan, semua yang kamu sentuh bisa jadi poin. Tapi ada kalanya bola itu malah jauh banget dari kamu, kayak kamu lagi ngejar mimpi, dan semuanya terasa kayak nggak mungkin dicapai. Kadang kamu udah ngerasa deket, eh tiba-tiba bola itu meluncur ke arah yang lain. Itu kayak hidup, kadang meskipun kita udah berusaha, hasilnya nggak selalu sesuai harapan.</p>
+                <p>Tapi yang paling lucu, kadang kamu merasa udah siap buat nge-dunk—semangat tinggi, penuh percaya diri, terus loncat... dan kepleset! Itu yang namanya momen di mana kamu belajar bahwa kadang jatuh itu bagian dari proses. Kadang nggak semuanya berjalan mulus, tapi yang penting adalah kamu bisa bangkit lagi dan terus mencoba. Karena di lapangan basket, seperti di hidup, yang paling penting bukan seberapa banyak kamu jatuh, tapi seberapa cepat kamu bisa bangkit dan kembali ke permainan!</p>
+            </div>
+            <div class="sports-image">
+                <div class="video-player">
+                    <video src="video_basketball.mp4" autoplay muted loop playsinline>
+                        Browser Anda tidak mendukung tag video.
+                    </video>
+                </div>
+            </div>
+        </div>
+        
+        <div class="soccer-content content-section" id="soccer">
+            <div class="sports-text">
+                <h2>Sepak Bola</h2>
+                <p>Kita main bola sama orang Prancis itu seru banget. Mereka sering bilang 'C'est magnifique!'—terkesan keren banget kan? Tapi sebenarnya, mereka cuma bilang gitu karena ngeliat bola meluncur keluar lapangan, entah itu karena tendangannya melenceng atau jatuh dari ketinggian. Meskipun bola jauh banget dari gawang, mereka tetap bilang itu 'magnifique' dengan senyum santai, seolah kegagalan itu bagian dari strategi. Bagi mereka, kegagalan bukan sesuatu yang perlu diratapi, malah jadi bagian dari gaya. Jadi, meskipun bola sering keluar lapangan, tetap aja kita jadi ketawa karena mereka bisa membuat momen gagal itu terlihat seolah-olah bagian dari keindahan permainan!</p>
+            </div>
+            <div class="sports-image">
+                <div class="video-player">
+                    <video src="video_soccer.mp4" autoplay muted loop playsinline>
+                        Browser Anda tidak mendukung tag video.
+                    </video>
+                </div>
+            </div>
+        </div>
+        
+        <div class="running-content content-section" id="running">
+            <div class="sports-text">
+                <h2>Lari-lari</h2>
+                <p>Lari itu kalau pengen kencang, jangan cuma mikir kayak pelari profesional. Pake trik aja, lari kayak copet! Kalo kamu lari cepet banget, orang pasti mikir, 'Wah, itu pasti ada yang dikejar!' Padahal cuma ngejar KFC yang udah tutup. Lari sambil liat kanan kiri, liat peluang—kalo ada yang ngelirik, tinggal gas pol! Tapi inget, jangan sampe ketahuan! Lari yang bener itu yang bisa ninggalin jejak… jejak adrenalin, bukan jejak kaki yang kepleset!</p>
+            </div>
+            <div class="sports-image">
+                <img src="running.jpg" alt="Running">
+            </div>
+        </div>
+        
+        <div class="gym-content content-section" id="gym">
+            <div class="sports-text">
+                <h2>GYM</h2>
+                <p>Gym itu memang berat, angkat beban di sana bikin otot-otot kamu berasa gemeteran. Tapi, kalau mau yang lebih berat, coba angkat beban keluarga! Karena itu lebih dari sekadar fisik—beban keluarga itu bisa bikin mental kamu berotot! Kadang, kamu merasa udah cukup kuat di gym, tapi pas pulang, 'angkat' semua drama keluarga, eh, rasanya kayak angkat barbel 100 kg. Jadi, kalau kamu bisa bertahan di angkat beban keluarga, yang di gym pasti cuma masalah sepele!</p>
+            </div>
+            <div class="sports-image">
+                <div class="video-player">
+                    <video src="video_gym.mp4" autoplay muted loop playsinline>
+                        Browser Anda tidak mendukung tag video.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 - Aditya Sakty. Semua Hak Dipentungi.</p>
+    </footer>
+    
+    <script>
+        // Function to show a specific content section
+        function showContentSection(targetId) {
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+                section.style.display = 'none';
+            });
+            
+            // Show the selected content section
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                
+                // Trigger reflow to enable animation
+                void targetSection.offsetWidth;
+                
+                // Add active class for animation
+                targetSection.classList.add('active');
+                
+                // For sports pages, maintain their flex display
+                if (targetId === 'basketball' || targetId === 'soccer' || targetId === 'running' || targetId === 'gym') {
+                    targetSection.style.display = 'flex';
+                }
+                
+                // Scroll to top smoothly
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Navigation functionality
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = this.getAttribute('data-target');
+                showContentSection(target);
+            });
+        });
+        
+        // Auto redirect to home if no hash or on initial load
+        window.addEventListener('load', function() {
+            // Check if there's a hash in the URL
+            const hash = window.location.hash.substring(1); // Remove the '#'
+            if (hash) {
+                // If a hash exists, try to show that section
+                showContentSection(hash);
+            } else {
+                // If no hash, default to home
+                showContentSection('home');
+            }
+        });
+
+        // Handle direct URL access with hash (e.g., index.html#motivation)
+        window.addEventListener('hashchange', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash) {
+                showContentSection(hash);
+            } else {
+                showContentSection('home');
+            }
+        });
+    </script>
+</body>
+</html>
